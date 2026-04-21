@@ -1,0 +1,29 @@
+# Dépendances installées par npm — ne jamais commiter ce dossier
+node_modules/
+
+# Dossier de build généré par "ng build"
+dist/
+
+# Cache Angular et Vite
+.angular/
+.vite/
+
+# Fichiers de log
+*.log
+npm-debug.log*
+
+# Variables d'environnement locales (clés secrètes, config perso)
+.env
+.env.*
+
+# Dossiers système macOS
+.DS_Store
+
+# Dossiers IDE JetBrains (IntelliJ, WebStorm…)
+.idea/
+
+# Dossiers IDE VS Code
+.vscode/
+
+# Fichiers de couverture de tests
+coverage/

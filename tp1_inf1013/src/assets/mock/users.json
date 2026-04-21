@@ -1,0 +1,56 @@
+[
+  {
+    "id": "owner-1",
+    "firstName": "Alice",
+    "lastName": "Tremblay",
+    "email": "alice@email.com",
+    "password": "alice123",
+    "phone": "514-111-1111",
+    "address": "12 rue Sainte-Catherine, Montreal, QC"
+  },
+  {
+    "id": "owner-2",
+    "firstName": "Bob",
+    "lastName": "Gagnon",
+    "email": "bob@email.com",
+    "password": "bob123",
+    "phone": "514-222-2222",
+    "address": "88 boulevard Henri-Bourassa, Montreal, QC"
+  },
+  {
+    "id": "owner-3",
+    "firstName": "Claire",
+    "lastName": "Roy",
+    "email": "claire@email.com",
+    "password": "claire123",
+    "phone": "514-333-3333",
+    "address": "5 avenue du Parc, Longueuil, QC"
+  },
+  {
+    "id": "owner-4",
+    "firstName": "David",
+    "lastName": "Lavoie",
+    "email": "david@email.com",
+    "password": "david123",
+    "phone": "450-444-4444",
+    "address": "300 rue Saint-Denis, Montreal, QC"
+  },
+  {
+    "id": "owner-5",
+    "firstName": "Emma",
+    "lastName": "Bouchard",
+    "email": "emma@email.com",
+    "password": "emma123",
+    "phone": "514-555-5555",
+    "address": "1200 chemin de la Cote-Sainte-Catherine, Montreal, QC"
+  },
+  {
+    "id": "owner-6",
+    "firstName": "Felix",
+    "lastName": "Cote",
+    "email": "felix@email.com",
+    "password": "felix123",
+    "phone": "450-666-6666",
+    "address": "75 rue des Seigneurs, Laval, QC"
+  }
+]

@@ -1,0 +1,121 @@
+<div class="page">
+  @if (notFound) {
+    <div class="not-found">
+      <h1>Annonce introuvable</h1>
+      <p>Impossible de modifier cette annonce. </p>
+      <button mat-button color="primary" routerLink="/my-ads">Retour a mes annonces</button>
+    </div>
+  } @else {
+    <mat-card class="card">
+      <mat-card-title>{{ isEdit ? 'Modifier une annonce' : 'Publier une annonce' }}</mat-card-title>
+      <mat-card-subtitle>Remplissez les informations du logement.</mat-card-subtitle>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h3 class="section-title">Description</h3>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Titre</mat-label>
+          <input matInput formControlName="title" placeholder="Ex: 4 1/2 lumineux" />
+          @if (form.controls.title.touched && form.controls.title.invalid) {
+            <mat-error>Titre requis (min 5 caracteres)</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Description courte</mat-label>
+          <textarea matInput formControlName="shortDescription" rows="2" placeholder="Resume en 1 ou 2 phrases"></textarea>
+          @if (form.controls.shortDescription.touched && form.controls.shortDescription.invalid) {
+            <mat-error>Max 120 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Description longue</mat-label>
+          <textarea matInput formControlName="longDescription" rows="5" placeholder="Details complets du logement"></textarea>
+          @if (form.controls.longDescription.touched && form.controls.longDescription.invalid) {
+            <mat-error>Min 20 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <h3 class="section-title">Prix</h3>
+        <div class="grid-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mensualite</mat-label>
+            <input matInput type="number" formControlName="monthlyRent" min="0" placeholder="1200" />
+            <mat-hint>Montant en dollars</mat-hint>
+            @if (form.controls.monthlyRent.touched && form.controls.monthlyRent.invalid) {
+              <mat-error>Montant invalide</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Date de disponibilite</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="availableFrom" />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (form.controls.availableFrom.touched && form.controls.availableFrom.invalid) {
+              <mat-error>Date requise</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <h3 class="section-title">Localisation</h3>
+        <div class="grid-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Adresse</mat-label>
+            <input matInput formControlName="street" placeholder="123 rue Principale" />
+            @if (form.controls.street.touched && form.controls.street.invalid) {
+              <mat-error>Adresse requise (min 4 caracteres)</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Ville</mat-label>
+            <input matInput formControlName="city" placeholder="Montreal" />
+            @if (form.controls.city.touched && form.controls.city.invalid) {
+              <mat-error>Ville requise (min 2 caracteres)</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Code postal</mat-label>
+            <input matInput formControlName="postalCode" placeholder="H2X 1Y4" />
+            <mat-hint>Format canadien (ex: H2X 1Y4)</mat-hint>
+            @if (form.controls.postalCode.touched && form.controls.postalCode.invalid) {
+              <mat-error>Code postal invalide</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <a
+            mat-stroked-button
+            color="primary"
+            [href]="getMapPreviewUrl()"
+            target="_blank"
+            rel="noopener"
+            [class.disabled]="!canPreviewMap()"
+            [attr.aria-disabled]="!canPreviewMap()"
+            aria-label="Previsualiser l'adresse sur la carte"
+          >
+            <mat-icon>map</mat-icon>
+            Previsualiser sur la carte
+          </a>
+        </div>
+
+        <h3 class="section-title">Photos</h3>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Photos (URLs)</mat-label>
+          <textarea matInput formControlName="photosText" rows="3" placeholder="https://...\nhttps://..."></textarea>
+          <mat-hint>1 URL par ligne. Si vide, un placeholder sera utilise.</mat-hint>
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-button type="button" routerLink="/my-ads">Retour</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  }
+</div>

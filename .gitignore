@@ -1,0 +1,8 @@
+
+# Fichiers à ignorer
+.idea/
+.DS_Store
+tp1_inf1013/node_modules/
+tp1_inf1013/dist/
+tp1_inf1013/.idea/
+tp1_inf1013/.DS_Store

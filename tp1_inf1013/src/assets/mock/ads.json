@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "title": "Studio lumineux centre-ville",
+    "shortDescription": "Studio renove a deux pas du metro.",
+    "longDescription": "Studio lumineux de 24 m2, cuisine equipee, proche commerces et transports.",
+    "monthlyRent": 850,
+    "availableFrom": "2026-03-01",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "12 rue Sainte-Catherine, Montreal, QC",
+    "ownerId": "owner-1",
+    "isActive": true,
+    "views": 12
+  },
+  {
+    "id": 2,
+    "title": "3 1/2 avec balcon",
+    "shortDescription": "Appartement calme avec balcon prive.",
+    "longDescription": "3 1/2 au 3e etage, balcon, chauffage inclus, stationnement disponible.",
+    "monthlyRent": 1150,
+    "availableFrom": "2026-04-15",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "88 boulevard Henri-Bourassa, Montreal, QC",
+    "ownerId": "owner-2",
+    "isActive": true,
+    "views": 7
+  },
+  {
+    "id": 3,
+    "title": "4 1/2 familial",
+    "shortDescription": "Spacieux 4 1/2 proche des ecoles.",
+    "longDescription": "Grand salon, deux chambres, salle de bain renovee, parc a proximite.",
+    "monthlyRent": 1490,
+    "availableFrom": "2026-02-20",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "5 avenue du Parc, Longueuil, QC",
+    "ownerId": "owner-3",
+    "isActive": true,
+    "views": 21
+  },
+  {
+    "id": 4,
+    "title": "Loft industriel",
+    "shortDescription": "Loft avec plafond haut et style industriel.",
+    "longDescription": "Loft de 55 m2, grandes fenetres, cuisine ouverte, ideal pour couple.",
+    "monthlyRent": 1750,
+    "availableFrom": "2026-05-01",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "210 rue de la Commune, Montreal, QC",
+    "ownerId": "owner-1",
+    "isActive": true,
+    "views": 4
+  },
+  {
+    "id": 5,
+    "title": "5 1/2 avec stationnement",
+    "shortDescription": "Appartement spacieux, stationnement inclus.",
+    "longDescription": "5 1/2 bien entretenu, salle a manger separee, buanderie.",
+    "monthlyRent": 1850,
+    "availableFrom": "2026-06-01",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "45 rue Sherbrooke Ouest, Montreal, QC",
+    "ownerId": "owner-2",
+    "isActive": false,
+    "views": 33
+  },
+  {
+    "id": 6,
+    "title": "Condo moderne",
+    "shortDescription": "Condo recent pres du centre.",
+    "longDescription": "Condo 1 chambre, gym et terrasse sur le toit, rangement inclus.",
+    "monthlyRent": 2100,
+    "availableFrom": "2026-03-15",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "300 rue Saint-Denis, Montreal, QC",
+    "ownerId": "owner-4",
+    "isActive": true,
+    "views": 9
+  },
+  {
+    "id": 7,
+    "title": "Studio etudiant",
+    "shortDescription": "Studio abordable proche universite.",
+    "longDescription": "Studio 18 m2, proche campus, bus direct, internet inclus.",
+    "monthlyRent": 720,
+    "availableFrom": "2026-02-28",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "1200 chemin de la Cote-Sainte-Catherine, Montreal, QC",
+    "ownerId": "owner-5",
+    "isActive": true,
+    "views": 18
+  },
+  {
+    "id": 8,
+    "title": "Maison de ville",
+    "shortDescription": "Maison de ville avec cour.",
+    "longDescription": "Maison sur deux etages, 3 chambres, cour arriere, ideal famille.",
+    "monthlyRent": 2600,
+    "availableFrom": "2026-07-01",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "75 rue des Seigneurs, Laval, QC",
+    "ownerId": "owner-6",
+    "isActive": true,
+    "views": 5
+  },
+  {
+    "id": 9,
+    "title": "Sous-sol renove",
+    "shortDescription": "2 1/2 renove en sous-sol.",
+    "longDescription": "Sous-sol propre et lumineux, entree independante, laveuse incluse.",
+    "monthlyRent": 980,
+    "availableFrom": "2026-03-10",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "14 rue Saint-Laurent, Brossard, QC",
+    "ownerId": "owner-3",
+    "isActive": true,
+    "views": 2
+  },
+  {
+    "id": 10,
+    "title": "Penthouse vue ville",
+    "shortDescription": "Penthouse avec grande terrasse.",
+    "longDescription": "Penthouse 2 chambres, vue panoramique, terrasse privee, ascenseur.",
+    "monthlyRent": 3200,
+    "availableFrom": "2026-08-01",
+    "photos": [
+      "assets/images/placeholder.svg"
+    ],
+    "locationAddress": "500 boulevard Rene-Levesque, Montreal, QC",
+    "ownerId": "owner-4",
+    "isActive": true,
+    "views": 0
+  }
+]

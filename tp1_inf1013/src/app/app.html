@@ -1,0 +1,79 @@
+<mat-toolbar class="app-toolbar" color="primary">
+  <div class="toolbar-content container">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark" aria-hidden="true">ML</span>
+      <span class="brand-text">Mon Location</span>
+    </a>
+    <span class="spacer"></span>
+
+    @if (auth.isLoggedIn()) {
+      <span class="greeting hide-mobile">Bonjour, {{ auth.currentUser()?.firstName || 'utilisateur' }}</span>
+    }
+
+    <nav class="nav-links hide-mobile" aria-label="Navigation principale">
+      <a
+        mat-button
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Accueil
+      </a>
+
+      @if (auth.isLoggedIn()) {
+        <a mat-button class="nav-link" routerLink="/my-ads/new" routerLinkActive="is-active">
+          Publier
+        </a>
+        <a mat-button class="nav-link" routerLink="/my-ads" routerLinkActive="is-active">
+          Mes annonces
+        </a>
+        <a mat-button class="nav-link" routerLink="/profile" routerLinkActive="is-active">
+          Profil
+        </a>
+        <button mat-button class="nav-link" type="button" (click)="logout()">Déconnexion</button>
+      } @else {
+        <a mat-button class="nav-link" routerLink="/login" routerLinkActive="is-active">
+          Connexion
+        </a>
+        <a mat-button class="nav-link" routerLink="/register" routerLinkActive="is-active">
+          Inscription
+        </a>
+      }
+    </nav>
+
+    <button
+      mat-icon-button
+      class="hide-desktop"
+      [matMenuTriggerFor]="mobileMenu"
+      aria-label="Ouvrir le menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-menu #mobileMenu="matMenu">
+  @if (auth.isLoggedIn()) {
+    <button mat-menu-item disabled>
+      Bonjour, {{ auth.currentUser()?.firstName || 'utilisateur' }}
+    </button>
+  }
+  <button mat-menu-item routerLink="/">Accueil</button>
+
+  @if (auth.isLoggedIn()) {
+    <button mat-menu-item routerLink="/my-ads/new">Publier</button>
+    <button mat-menu-item routerLink="/my-ads">Mes annonces</button>
+    <button mat-menu-item routerLink="/profile">Profil</button>
+    <button mat-menu-item type="button" (click)="logout()">Déconnexion</button>
+  } @else {
+    <button mat-menu-item routerLink="/login">Connexion</button>
+    <button mat-menu-item routerLink="/register">Inscription</button>
+  }
+</mat-menu>
+
+<main class="app-content">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
