@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tp2-postgres
+    environment:
+      POSTGRES_USER: tp
+      POSTGRES_PASSWORD: tp
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tp"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: tp2-auth-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 8081
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-key-change-me-dev-secret-key-change-me}
+      JWT_ISSUER: tp-final-auth
+      JWT_EXPIRATION_MS: 86400000
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/authdb
+      SPRING_DATASOURCE_USERNAME: tp
+      SPRING_DATASOURCE_PASSWORD: tp
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8081:8081"
+
+  business-service:
+    build:
+      context: ./business-service
+      dockerfile: Dockerfile
+    container_name: tp2-business-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 8082
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-key-change-me-dev-secret-key-change-me}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/businessdb
+      SPRING_DATASOURCE_USERNAME: tp
+      SPRING_DATASOURCE_PASSWORD: tp
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8082:8082"
+
+volumes:
+  postgres_data:
+

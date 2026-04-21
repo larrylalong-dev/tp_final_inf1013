@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-ads
+      author: tp-final
+      changes:
+        - createTable:
+            tableName: ads
+            columns:
+              - column:
+                  name: id
+                  type: varchar(80)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(180)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: short_description
+                  type: varchar(240)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: long_description
+                  type: varchar(4000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: monthly_rent
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: available_from
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: photos_text
+                  type: varchar(4000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location_address
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(255)
+              - column:
+                  name: city
+                  type: varchar(120)
+              - column:
+                  name: postal_code
+                  type: varchar(30)
+              - column:
+                  name: street_address
+                  type: varchar(500)
+              - column:
+                  name: owner_id
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: views
+                  type: int
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: ads
+            indexName: idx_ads_owner_id
+            columns:
+              - column:
+                  name: owner_id
+

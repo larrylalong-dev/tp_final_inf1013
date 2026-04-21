@@ -1,0 +1,27 @@
+server:
+  port: ${PORT:8081}
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:authdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-key-change-me-dev-secret-key-change-me}
+    issuer: ${JWT_ISSUER:tp-final-auth}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+

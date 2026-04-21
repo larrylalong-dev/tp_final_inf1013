@@ -1,0 +1,65 @@
+### Variables
+@authBaseUrl = http://localhost:8081
+@businessBaseUrl = http://localhost:8082
+@email = testuser+{{$timestamp}}@mail.com
+@password = test1234
+
+### 1) Register
+POST {{authBaseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "User",
+  "phone": "514 111 2222",
+  "email": "{{email}}",
+  "address": "123 Rue Test, Montreal",
+  "password": "{{password}}"
+}
+
+> {%
+client.global.set("token", response.body.accessToken);
+client.global.set("ownerId", response.body.user.id);
+%}
+
+### 2) Create ad
+POST {{businessBaseUrl}}/ads
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Condo test",
+  "shortDescription": "Condo moderne proche du metro",
+  "longDescription": "Annonce de test pour valider le flux microservices de bout en bout.",
+  "monthlyRent": 1450,
+  "availableFrom": "2026-05-01",
+  "photos": ["https://picsum.photos/seed/tp/800/600"],
+  "locationAddress": "100 Rue Sainte-Catherine O, Montreal, H2X 1Z6",
+  "street": "100 Rue Sainte-Catherine O",
+  "city": "Montreal",
+  "postalCode": "H2X 1Z6",
+  "ownerId": "{{ownerId}}",
+  "isActive": true,
+  "views": 0
+}
+
+> {%
+client.global.set("adId", response.body.id);
+%}
+
+### 3) Send message
+POST {{businessBaseUrl}}/messages
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "adId": "{{adId}}",
+  "ownerId": "{{ownerId}}",
+  "subject": "Interesse par votre logement",
+  "body": "Bonjour, est-ce possible de visiter ce vendredi soir ?"
+}
+
+### 4) Verify messages for ad
+GET {{businessBaseUrl}}/ads/{{adId}}/messages
+Authorization: Bearer {{token}}
+
