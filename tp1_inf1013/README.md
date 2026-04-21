@@ -114,3 +114,24 @@ Ces données sont ensuite copiées dans le localStorage du navigateur pour être
 6. **Modifier son profil** → Menu → Profil
 
 > **Note** : Pour réinitialiser les données au départ (recharger les annonces et utilisateurs JSON), il suffit de vider le localStorage du navigateur via les outils de développement (F12 → Application → Local Storage → tout supprimer), puis de rafraîchir la page.
+
+---
+
+## Configuration runtime front (Railway)
+
+Le front génère automatiquement `public/env.js` avant le build via le script `prebuild`.
+
+Variables d'environnement supportées:
+- `MON_LOCATION_AUTH_MODE` (`api` ou `mock`)
+- `MON_LOCATION_ADS_MODE` (`api` ou `mock`)
+- `MON_LOCATION_MESSAGES_MODE` (`api` ou `mock`)
+- `MON_LOCATION_AUTH_BASE_URL`
+- `MON_LOCATION_BUSINESS_BASE_URL`
+
+Exemple (Railway):
+- `MON_LOCATION_AUTH_MODE=api`
+- `MON_LOCATION_ADS_MODE=api`
+- `MON_LOCATION_MESSAGES_MODE=api`
+- `MON_LOCATION_AUTH_BASE_URL=https://microservicesauth-service-production.up.railway.app`
+- `MON_LOCATION_BUSINESS_BASE_URL=https://microservicebusiness-service-production.up.railway.app`
+

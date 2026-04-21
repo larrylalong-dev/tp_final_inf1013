@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 import { User } from '../../models/user.model';
-import { DATA_SOURCE_CONFIG } from '../../core/data-source.config';
+import { getDataSourceConfig } from '../../core/data-source.config';
 
 // Clé pour stocker la liste des utilisateurs dans le localStorage
 const USERS_KEY = 'users';
@@ -35,8 +35,6 @@ export class AuthService {
   private currentUserIdCache: string | null = null;
   private currentUserSnapshotCache: User | null = null;
   private authTokenCache: string | null = null;
-
-  private readonly authBaseUrl = DATA_SOURCE_CONFIG.api.authBaseUrl.replace(/\/$/, '');
 
   // init() est appelé au démarrage (voir app.config.ts)
   // Si aucun utilisateur n'existe dans le localStorage, on charge users.json
@@ -129,7 +127,7 @@ export class AuthService {
     if (this.isApiMode()) {
       try {
         const response = await firstValueFrom(
-          this.http.post<AuthResponse>(`${this.authBaseUrl}/auth/register`, payload)
+          this.http.post<AuthResponse>(`${this.authBaseUrl()}/auth/register`, payload)
         );
         this.setToken(response.accessToken);
         this.setCurrentUserSnapshot(response.user);
@@ -169,7 +167,7 @@ export class AuthService {
     if (this.isApiMode()) {
       try {
         const response = await firstValueFrom(
-          this.http.post<AuthResponse>(`${this.authBaseUrl}/auth/login`, {
+          this.http.post<AuthResponse>(`${this.authBaseUrl()}/auth/login`, {
             email,
             password
           })
@@ -210,7 +208,7 @@ export class AuthService {
       }
 
       return firstValueFrom(
-        this.http.put<User>(`${this.authBaseUrl}/auth/me`, update, {
+        this.http.put<User>(`${this.authBaseUrl()}/auth/me`, update, {
           headers: this.buildAuthHeaders(token)
         })
       )
@@ -318,7 +316,7 @@ export class AuthService {
   }
 
   private isApiMode(): boolean {
-    return DATA_SOURCE_CONFIG.auth === 'api';
+    return getDataSourceConfig().auth === 'api';
   }
 
   private async refreshCurrentUserFromApi(): Promise<void> {
@@ -329,7 +327,7 @@ export class AuthService {
 
     try {
       const user = await firstValueFrom(
-        this.http.get<User>(`${this.authBaseUrl}/auth/me`, {
+        this.http.get<User>(`${this.authBaseUrl()}/auth/me`, {
           headers: this.buildAuthHeaders(token)
         })
       );
@@ -344,5 +342,9 @@ export class AuthService {
     return `user-${Date.now().toString(36)}-${Math.random()
       .toString(36)
       .slice(2, 8)}`;
+  }
+
+  private authBaseUrl(): string {
+    return getDataSourceConfig().api.authBaseUrl.replace(/\/$/, '');
   }
 }

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 import { Message } from '../../models/message.model';
-import { DATA_SOURCE_CONFIG } from '../../core/data-source.config';
+import { getDataSourceConfig } from '../../core/data-source.config';
 
 const STORAGE_KEY = 'messages';
 
@@ -15,7 +15,6 @@ export class MessageService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly http = inject(HttpClient);
   private messagesCache: Message[] | null = null;
-  private readonly businessBaseUrl = DATA_SOURCE_CONFIG.api.businessBaseUrl.replace(/\/$/, '');
 
   seedIfNeeded(): void {
     if (this.messagesCache) {
@@ -60,7 +59,7 @@ export class MessageService {
 
     if (this.isApiMode()) {
       this.http
-        .post(`${this.businessBaseUrl}/messages`, created, this.withAuthIfAvailable())
+        .post(`${this.businessBaseUrl()}/messages`, created, this.withAuthIfAvailable())
         .subscribe({ error: () => void 0 });
     }
 
@@ -129,7 +128,11 @@ export class MessageService {
   }
 
   private isApiMode(): boolean {
-    return DATA_SOURCE_CONFIG.messages === 'api';
+    return getDataSourceConfig().messages === 'api';
+  }
+
+  private businessBaseUrl(): string {
+    return getDataSourceConfig().api.businessBaseUrl.replace(/\/$/, '');
   }
 
   private withAuthIfAvailable(): { headers?: HttpHeaders } {
@@ -150,7 +153,7 @@ export class MessageService {
   private async refreshFromApi(): Promise<void> {
     try {
       const messages = await firstValueFrom(
-        this.http.get<Message[]>(`${this.businessBaseUrl}/messages`, this.withAuthIfAvailable())
+        this.http.get<Message[]>(`${this.businessBaseUrl()}/messages`, this.withAuthIfAvailable())
       );
       this.persist(messages);
     } catch {

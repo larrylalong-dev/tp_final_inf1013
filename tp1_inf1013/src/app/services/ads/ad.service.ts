@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 import { Ad } from '../../models/ad.model';
-import { DATA_SOURCE_CONFIG } from '../../core/data-source.config';
+import { getDataSourceConfig } from '../../core/data-source.config';
 
 // Clé utilisée pour stocker les annonces dans le localStorage
 const STORAGE_KEY = 'ads';
@@ -25,7 +25,6 @@ export class AdService {
 
   // Cache en mémoire pour éviter de relire le localStorage à chaque appel
   private adsCache: Ad[] | null = null;
-  private readonly businessBaseUrl = DATA_SOURCE_CONFIG.api.businessBaseUrl.replace(/\/$/, '');
 
   // init() est appelé au démarrage de l'application (voir app.config.ts)
   // Si le localStorage est vide, on charge les annonces depuis le fichier JSON
@@ -40,7 +39,7 @@ export class AdService {
 
     if (this.isApiMode()) {
       try {
-        const apiAds = await firstValueFrom(this.http.get<Ad[]>(`${this.businessBaseUrl}/ads`));
+        const apiAds = await firstValueFrom(this.http.get<Ad[]>(`${this.businessBaseUrl()}/ads`));
         this.adsCache = apiAds.map((ad) => this.normalizeAd(ad));
         this.persist(this.adsCache);
         return;
@@ -92,7 +91,7 @@ export class AdService {
     this.persist(ads);
     if (this.isApiMode()) {
       this.http
-        .post(`${this.businessBaseUrl}/ads`, normalized, this.withAuthIfAvailable())
+        .post(`${this.businessBaseUrl()}/ads`, normalized, this.withAuthIfAvailable())
         .subscribe({ error: () => void 0 });
     }
     return normalized;
@@ -113,7 +112,11 @@ export class AdService {
     this.persist(ads);
     if (this.isApiMode()) {
       this.http
-        .put(`${this.businessBaseUrl}/ads/${encodeURIComponent(String(normalized.id))}`, normalized, this.withAuthIfAvailable())
+        .put(
+          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(normalized.id))}`,
+          normalized,
+          this.withAuthIfAvailable()
+        )
         .subscribe({ error: () => void 0 });
     }
     return normalized;
@@ -126,7 +129,10 @@ export class AdService {
     this.persist(next);
     if (this.isApiMode()) {
       this.http
-        .delete(`${this.businessBaseUrl}/ads/${encodeURIComponent(String(id))}`, this.withAuthIfAvailable())
+        .delete(
+          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}`,
+          this.withAuthIfAvailable()
+        )
         .subscribe({ error: () => void 0 });
     }
   }
@@ -141,7 +147,7 @@ export class AdService {
     if (this.isApiMode()) {
       this.http
         .patch(
-          `${this.businessBaseUrl}/ads/${encodeURIComponent(String(id))}/active`,
+          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/active`,
           { isActive: ad.isActive },
           this.withAuthIfAvailable()
         )
@@ -159,7 +165,7 @@ export class AdService {
     if (this.isApiMode()) {
       this.http
         .post(
-          `${this.businessBaseUrl}/ads/${encodeURIComponent(String(id))}/views`,
+          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/views`,
           {},
           this.withAuthIfAvailable()
         )
@@ -272,7 +278,11 @@ export class AdService {
   }
 
   private isApiMode(): boolean {
-    return DATA_SOURCE_CONFIG.ads === 'api';
+    return getDataSourceConfig().ads === 'api';
+  }
+
+  private businessBaseUrl(): string {
+    return getDataSourceConfig().api.businessBaseUrl.replace(/\/$/, '');
   }
 
   private withAuthIfAvailable(): { headers?: HttpHeaders } {
