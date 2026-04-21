@@ -10,14 +10,13 @@ export interface DataSourceConfig {
   };
 }
 
-// Toggle these values to switch progressively from mocked local data to microservices.
+// Railway production setup
 export const DATA_SOURCE_CONFIG: DataSourceConfig = {
-  auth: 'mock',
-  ads: 'mock',
-  messages: 'mock',
+  auth: 'api',
+  ads: 'api',
+  messages: 'api',
   api: {
-    authBaseUrl: 'http://localhost:8081',
-    businessBaseUrl: 'http://localhost:8082'
+    authBaseUrl: 'https://microservicesauth-service-production.up.railway.app',
+    businessBaseUrl: 'https://microservicebusiness-service-production.up.railway.app'
   }
 };
-
