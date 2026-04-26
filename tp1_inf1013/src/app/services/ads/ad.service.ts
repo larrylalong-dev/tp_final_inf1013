@@ -99,9 +99,18 @@ export class AdService {
     ads.push(normalized);
     this.persist(ads);
     if (this.isApiMode()) {
+      const url = `${this.businessBaseUrl()}/ads`;
+      console.log('[AdService.create] Posting ad to:', url, normalized);
       this.http
-        .post(`${this.businessBaseUrl()}/ads`, normalized, this.withAuthIfAvailable())
-        .subscribe({ error: () => void 0 });
+        .post(`${url}`, normalized, this.withAuthIfAvailable())
+        .subscribe({
+          next: (response) => {
+            console.log('[AdService.create] Success:', response);
+          },
+          error: (error) => {
+            console.error('[AdService.create] Error:', error);
+          }
+        });
     }
     return normalized;
   }
@@ -120,13 +129,18 @@ export class AdService {
 
     this.persist(ads);
     if (this.isApiMode()) {
+      const url = `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(normalized.id))}`;
+      console.log('[AdService.update] Putting ad to:', url, normalized);
       this.http
-        .put(
-          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(normalized.id))}`,
-          normalized,
-          this.withAuthIfAvailable()
-        )
-        .subscribe({ error: () => void 0 });
+        .put(url, normalized, this.withAuthIfAvailable())
+        .subscribe({
+          next: (response) => {
+            console.log('[AdService.update] Success:', response);
+          },
+          error: (error) => {
+            console.error('[AdService.update] Error:', error);
+          }
+        });
     }
     return normalized;
   }
@@ -137,12 +151,18 @@ export class AdService {
     const next = ads.filter((item) => !this.matchesId(item.id, id));
     this.persist(next);
     if (this.isApiMode()) {
+      const url = `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}`;
+      console.log('[AdService.delete] Deleting ad at:', url);
       this.http
-        .delete(
-          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}`,
-          this.withAuthIfAvailable()
-        )
-        .subscribe({ error: () => void 0 });
+        .delete(url, this.withAuthIfAvailable())
+        .subscribe({
+          next: (response) => {
+            console.log('[AdService.delete] Success:', response);
+          },
+          error: (error) => {
+            console.error('[AdService.delete] Error:', error);
+          }
+        });
     }
   }
 
@@ -154,13 +174,18 @@ export class AdService {
     ad.isActive = !ad.isActive;
     this.persist(ads);
     if (this.isApiMode()) {
+      const url = `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/active`;
+      console.log('[AdService.toggleActive] Patching ad at:', url, { isActive: ad.isActive });
       this.http
-        .patch(
-          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/active`,
-          { isActive: ad.isActive },
-          this.withAuthIfAvailable()
-        )
-        .subscribe({ error: () => void 0 });
+        .patch(url, { isActive: ad.isActive }, this.withAuthIfAvailable())
+        .subscribe({
+          next: (response) => {
+            console.log('[AdService.toggleActive] Success:', response);
+          },
+          error: (error) => {
+            console.error('[AdService.toggleActive] Error:', error);
+          }
+        });
     }
   }
 
@@ -172,13 +197,18 @@ export class AdService {
     ad.views += 1;
     this.persist(ads);
     if (this.isApiMode()) {
+      const url = `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/views`;
+      console.log('[AdService.incrementViews] Posting views to:', url);
       this.http
-        .post(
-          `${this.businessBaseUrl()}/ads/${encodeURIComponent(String(id))}/views`,
-          {},
-          this.withAuthIfAvailable()
-        )
-        .subscribe({ error: () => void 0 });
+        .post(url, {}, this.withAuthIfAvailable())
+        .subscribe({
+          next: (response) => {
+            console.log('[AdService.incrementViews] Success:', response);
+          },
+          error: (error) => {
+            console.error('[AdService.incrementViews] Error:', error);
+          }
+        });
     }
   }
 
