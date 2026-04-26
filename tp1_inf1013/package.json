@@ -10,7 +10,7 @@
     "test": "ng test",
     "serve:ssr:mon-location": "node dist/mon-location/server/server.mjs",
     "firebase:login": "firebase login",
-    "firebase:use": "firebase use mon-app-location-40ac9",
+    "firebase:use": "firebase use monlocation",
     "firebase:deploy": "firebase deploy --only hosting",
     "deploy": "npm run build && npm run firebase:deploy"
   },

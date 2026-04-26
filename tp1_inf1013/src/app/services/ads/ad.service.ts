@@ -39,29 +39,38 @@ export class AdService {
 
     if (this.isApiMode()) {
       try {
-        const apiAds = await firstValueFrom(this.http.get<Ad[]>(`${this.businessBaseUrl()}/ads`));
+        const url = `${this.businessBaseUrl()}/ads`;
+        console.log('[AdService.init] Fetching ads from API:', url);
+        const apiAds = await firstValueFrom(this.http.get<Ad[]>(url));
+        console.log('[AdService.init] Ads loaded from API:', apiAds.length);
         this.adsCache = apiAds.map((ad) => this.normalizeAd(ad));
         this.persist(this.adsCache);
         return;
-      } catch {
+      } catch (error) {
         // Fallback local pour ne pas casser l'UI si l'API n'est pas encore disponible
+        console.error('[AdService.init] Error fetching from API:', error);
       }
     }
 
     if (stored) {
       // Des annonces existent déjà dans le localStorage → on les utilise
+      console.log('[AdService.init] Loading ads from localStorage');
       this.adsCache = this.parseAds(stored);
+      console.log('[AdService.init] Loaded from localStorage:', this.adsCache.length, 'ads');
     } else {
       // Première visite : on charge les annonces pré-enregistrées depuis le fichier JSON
+      console.log('[AdService.init] No stored ads, loading seed data from assets/mock/ads.json');
       try {
         const seedAds = await firstValueFrom(
           this.http.get<Ad[]>('assets/mock/ads.json')
         );
         // On normalise chaque annonce (photos, adresse…) avant de les sauvegarder
         this.adsCache = seedAds.map((ad) => this.normalizeAd(ad));
+        console.log('[AdService.init] Loaded seed ads:', this.adsCache.length);
         this.persist(this.adsCache);
-      } catch {
+      } catch (error) {
         // Si le fichier JSON est introuvable, on démarre avec une liste vide
+        console.error('[AdService.init] Error loading seed ads:', error);
         this.adsCache = [];
       }
     }
